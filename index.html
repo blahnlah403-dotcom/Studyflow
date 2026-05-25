@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyHub AI</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(to right,#dbeafe,#f0f9ff);
+      min-height:100vh;
+      padding:20px;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:auto;
+    }
+
+    h1{
+      text-align:center;
+      color:#2563eb;
+      margin-bottom:10px;
+      font-size:42px;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:#555;
+      margin-bottom:40px;
+    }
+
+    .card{
+      background:white;
+      padding:25px;
+      border-radius:15px;
+      margin-bottom:25px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h2{
+      color:#2563eb;
+      margin-bottom:20px;
+    }
+
+    textarea,
+    input{
+      width:100%;
+      padding:14px;
+      border:1px solid #ccc;
+      border-radius:10px;
+      margin-bottom:15px;
+      font-size:16px;
+    }
+
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    button{
+      background:#2563eb;
+      color:white;
+      border:none;
+      padding:14px 20px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:16px;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .output{
+      margin-top:20px;
+      background:#f8fafc;
+      padding:20px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      line-height:1.8;
+    }
+
+    .flashcard{
+      background:#eff6ff;
+      padding:15px;
+      border-radius:10px;
+      margin-bottom:15px;
+      border-left:5px solid #2563eb;
+    }
+
+    .question{
+      margin-bottom:15px;
+      padding:15px;
+      background:#f1f5f9;
+      border-radius:10px;
+    }
+
+    iframe{
+      width:100%;
+      height:400px;
+      border:none;
+      border-radius:10px;
+      margin-top:15px;
+    }
+
+    footer{
+      text-align:center;
+      margin-top:40px;
+      color:#666;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>StudyHub AI</h1>
+  <p class="subtitle">
+    Generate Notes, Flashcards & Mock Tests for Any Topic
+  </p>
+
+  <!-- NOTES SECTION -->
+
+  <div class="card">
+
+    <h2>Generate Notes</h2>
+
+    <textarea id="topicInput" placeholder="Enter any topic..."></textarea>
+
+    <button onclick="generateNotes()">
+      Generate Notes
+    </button>
+
+    <div class="output" id="notesOutput"></div>
+
+  </div>
+
+  <!-- YOUTUBE SECTION -->
+
+  <div class="card">
+
+    <h2>Add YouTube Lecture</h2>
+
+    <input type="text" id="youtubeUrl" placeholder="Paste YouTube video URL">
+
+    <button onclick="loadVideo()">
+      Load Video
+    </button>
+
+    <div id="videoContainer"></div>
+
+  </div>
+
+  <!-- FLASHCARDS SECTION -->
+
+  <div class="card">
+
+    <h2>Generate Flashcards</h2>
+
+    <input type="text" id="flashcardTopic" placeholder="Enter topic for flashcards">
+
+    <button onclick="generateFlashcards()">
+      Generate Flashcards
+    </button>
+
+    <div class="output" id="flashcardOutput"></div>
+
+  </div>
+
+  <!-- MOCK TEST SECTION -->
+
+  <div class="card">
+
+    <h2>Generate Mock Test</h2>
+
+    <input type="text" id="mockTopic" placeholder="Enter topic for mock test">
+
+    <button onclick="generateMockTest()">
+      Generate Mock Test
+    </button>
+
+    <div class="output" id="mockOutput"></div>
+
+  </div>
+
+</div>
+
+<footer>
+  Made with ❤️ for Students
+</footer>
+
+<script>
+
+function generateNotes(){
+
+  let topic = document.getElementById("topicInput").value;
+
+  let output = `
+    <h3>Notes on ${topic}</h3>
+
+    <p>
+      ${topic} is an important subject used in academics and competitive exams.
+    </p>
+
+    <ul>
+      <li>Introduction to ${topic}</li>
+      <li>Important concepts of ${topic}</li>
+      <li>Advantages and applications</li>
+      <li>Examples related to ${topic}</li>
+      <li>Quick revision points</li>
+    </ul>
+
+    <p>
+      Study regularly and revise the core concepts to master ${topic}.
+    </p>
+  `;
+
+  document.getElementById("notesOutput").innerHTML = output;
+
+}
+
+function loadVideo(){
+
+  let url = document.getElementById("youtubeUrl").value;
+
+  let videoId = "";
+
+  if(url.includes("watch?v=")){
+    videoId = url.split("watch?v=")[1];
+  }
+
+  else if(url.includes("youtu.be/")){
+    videoId = url.split("youtu.be/")[1];
+  }
+
+  let iframe = `
+    <iframe 
+      src="https://www.youtube.com/embed/${videoId}">
+    </iframe>
+  `;
+
+  document.getElementById("videoContainer").innerHTML = iframe;
+
+}
+
+function generateFlashcards(){
+
+  let topic = document.getElementById("flashcardTopic").value;
+
+  let cards = `
+  
+  <div class="flashcard">
+    <strong>Q1:</strong> What is ${topic}?<br>
+    <strong>Answer:</strong> ${topic} is an important study concept.
+  </div>
+
+  <div class="flashcard">
+    <strong>Q2:</strong> Why is ${topic} important?<br>
+    <strong>Answer:</strong> It helps in understanding core concepts.
+  </div>
+
+  <div class="flashcard">
+    <strong>Q3:</strong> Applications of ${topic}?<br>
+    <strong>Answer:</strong> Used in education, exams and practical learning.
+  </div>
+
+  `;
+
+  document.getElementById("flashcardOutput").innerHTML = cards;
+
+}
+
+function generateMockTest(){
+
+  let topic = document.getElementById("mockTopic").value;
+
+  let test = `
+
+  <h3>Mock Test: ${topic}</h3>
+
+  <div class="question">
+    1. What is ${topic}?
+  </div>
+
+  <div class="question">
+    2. Explain advantages of ${topic}.
+  </div>
+
+  <div class="question">
+    3. Write short notes on ${topic}.
+  </div>
+
+  <div class="question">
+    4. Give one real life example of ${topic}.
+  </div>
+
+  <div class="question">
+    5. Why should students study ${topic}?
+  </div>
+
+  `;
+
+  document.getElementById("mockOutput").innerHTML = test;
+
+}
+
+</script>
+
+</body>
+</html>
